@@ -10,4 +10,4 @@ const con = () =>{
       });
 }
 
-  exports.connect = connect;
+  exports.con = con;

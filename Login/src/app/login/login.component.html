@@ -1,0 +1,22 @@
+<body>
+    <div class="container">
+      <div class="header">
+        <h2>Login</h2>
+      </div>
+      
+      <div id="form" class="form">
+        <div class="form-control error">
+          <label for="email">CPF</label>
+          <input type="text" id="cpf" placeholder="Digite seu CPF"[(ngModel)]='cpf'>
+        </div>
+        
+        <div class="form-control success">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" placeholder="Digite sua senha"[(ngModel)]='senha'>
+        </div>
+        <span class="msg-error">Erro de login</span>
+        <button (click)='login()'>Enviar</button>
+        <button></button>
+      </div>
+    </div>
+  </body>

@@ -1,0 +1,50 @@
+<div class="body">
+    <div class="container">
+      <div class="header">
+        <h2>Cadastro</h2>
+      </div>
+      
+      <div class="form">
+        <div class="form-control error">
+          <label for="nome">Nome</label>
+          <input type="text" [(ngModel)]="usuario" placeholder="Digite seu nome" required>
+        </div>
+        
+        <div class="form-control success">
+          <label for="telefone">Telefone</label>
+          <input type="text" [(ngModel)]="telefone" placeholder="Digite seu telefone" required>
+        </div>
+        <div class="form-control success">
+          <label for="delete">Deletar</label>
+          <input type="text" [(ngModel)]="idcontatos" placeholder="Digite o id" required>
+        </div>
+        <button (click)="addPessoa()">Enviar</button>
+        <button (click)="listarPessoas()">listar</button>
+        <button (click)="delete()">Deletar</button>
+        
+    </div>
+  </div>
+    <div class="lista">
+      <p>Contatos</p>
+      <ul>
+        <p *ngFor="let usuario of novoUsuario let i = index">{{i}}.{{usuario.nome}}</p>
+      </ul>
+      <ul>
+        <p *ngFor="let usuario of novoUsuario let i = index">{{i}}.{{usuario.tel}}</p>
+      </ul>
+      <br>
+    </div>
+  
+    <div class="lista">
+      <p>Contatos</p>
+      <ul>
+        <p *ngFor="let usuario of pessoas">{{usuario.idcontatos}}.{{usuario.nome}}</p>
+      </ul>
+      <br>
+      <ul>
+        <p *ngFor="let usuario of pessoas let i = index">{{usuario.idcontatos}}.{{usuario.telefone}}</p>
+      </ul>
+      <br>
+    </div>
+  </div>
+      

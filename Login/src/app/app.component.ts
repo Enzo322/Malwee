@@ -1,29 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { AppServiceService } from './app-service.service';
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent{
   title = 'Login';
+  cpf: string ='';
+  senha: string ='';
+  log: boolean = false;
+  constructor(private httpClient: HttpClient, private router: Router) { }
+  
 
-  constructor(private service : AppServiceService){
-
-  }
-
-  ngOnInit(): void {
-    this.getUsersFromAPI();
-  }
-  getUsersFromAPI(){
-    this.service.getUsers().subscribe((Response) =>{
-      console.log("Response from API is ",Response);
-
-    },(error)=>{
-      console.log("Error is ", error);
+  public login(){
+    this.httpClient.post('http://localhost:3005/login', {cpf: this.cpf, senha: this.senha}).toPromise().then((Response: any)=>{
+      if(Response.auth){
+        this.log = true;
+        window.localStorage.setItem('token', Response.token);
+        
+        this.router.navigate(['/cadastro'])
+        console.log("Logado");
+      }
     })
   }
+
 }
 
 

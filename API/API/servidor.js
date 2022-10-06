@@ -6,14 +6,21 @@ const port = 3005;
 const md5 = require('md5');
 const http = require('http');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 //-------------------------Conexão------------------------------------
 
+app.use(bodyParser.json());
+const corsOption = {
+    origin : '*',
+    optionsSuccessStatus : 200
+}
+app.use(cors(corsOption));
 
 const execSQL = (sql) => {
     
     
     return new Promise((resolve, reject) => {
-        const con = require('./conection').connect();
+        const con = require('./conection').con();
     
         con.connect((error) => {
             if (error){
@@ -33,57 +40,17 @@ const execSQL = (sql) => {
         })
     })
 }
-
-
-app.post('/login', async (req, res) => {
-
-    const con = require('./conection').connect();
-
-    con.connect((error) => {
-        if (error){
-            res.json({error : true}); 
-            console.error(error);
-            return;
-        }
-    })
-
-    const name  = req.body.name;
-    const senha = md5(req.body.senha);
-  
-    const sql    = `SELECT * FROM USER WHERE NAME = '${name}' AND SENHA = '${senha}' AND STATUS = 1 `
-    const result =  await execSQL(sql);
-  
-    if (result == undefined || result.length == 0){
-      res.status(500).json({message: 'Login inválido!'});
-      return;
-    }
-  
-    const id = result[0].idUsuario;
-      const token = jwt.sign({ id }, '1234', {
-          expiresIn: 300 // expires in 5min
-      });
-      return res.json({ auth: true, token: token });
-    });
-
-    app.post('/logout', function(req, res) {
-        res.json({ auth: false, token: null });
-});
-
-
-//-------------------------servidor--------------------------- 
-app.use(bodyParser.json());
-
-/*app.get('/users', (req,res)=>{
-    res.sendFile(path.join(__dirname + '/Login.html'));
-});
-
-app.get('/', (req,res)=>{
-    res.sendFile(path.join(__dirname + '/Cadastro.html'));
+function verifyJWT(req, res, next){
+    const token = req.headers['x-access-token'];
+    jwt.verify(token, SECRET, (err, decoded) => {
+    if(err) return res.status(401).end();
     
-});*/
-
-app.get('/users', (req,res)=>{//select
-    const con = require('./conection').connect();
+    req.cpf = decoded.cpf
+    next()
+})}
+//---------------------login-----------------
+app.get('/login', (req,res)=>{//select login
+    const con = require('./conection').con();
 
     con.connect((error) => {
         if (error){
@@ -92,7 +59,7 @@ app.get('/users', (req,res)=>{//select
             return;
         }
     })
-    con.query ('select * from Usuario', function(err,result){
+    con.query ('select * from usuario', function(err,result){
         res.send(result);
         if(err){
             throw err;
@@ -100,8 +67,9 @@ app.get('/users', (req,res)=>{//select
     });
 });
 
-app.post('/users', (req,res)=>{//insert
-    const con = require('./conection').connect();
+
+app.post('/users', (req,res)=>{//insert login
+    const con = require('./conection').con();
 
     con.connect((error) => {
         if (error){
@@ -110,13 +78,10 @@ app.post('/users', (req,res)=>{//insert
             return;
         }
     })
-    let name = req.body.name;
     let cpf = req.body.cpf;
-    let status = req.body.status;
     let senha = md5(req.body.senha);
 
-    con.query ("insert into Usuario (name, cpf, status, senha) values ("+name+"','"
-    +cpf+"',"+status+",'"+senha+"')", function(err,result){
+con.query (`insert into usuario (cpf, senha) values ('${cpf}','${senha}')`, function(err,result){
         res.send(result);
         console.log("FOI!");
 
@@ -128,26 +93,10 @@ app.post('/users', (req,res)=>{//insert
     
 });
 
-app.delete('/users',(req,res)=>{//delete
-    const con = require('./conection').connect();
 
-    con.connect((error) => {
-        if (error){
-            res.json({error : true}); 
-            console.error(error);
-            return;
-        }
-    })
-    con.query("delete from Usuario where idUsuario = "+req.body.idUsuario,function(err,result){
-        res.send(result);
-        if(err){
-            throw err;
-        }
-    });
-});
+app.post('/login', async (req, res) => {//token login
 
-app.put('/users',(req,res)=>{//update
-    const con = require('./conection').connect();
+    const con = require('./conection').con();
 
     con.connect((error) => {
         if (error){
@@ -157,7 +106,53 @@ app.put('/users',(req,res)=>{//update
         }
     })
 
-    con.query('update Usuario set status = '+req.body.status+' where idUsuario = '+req.body.idUsuario,function(err,result){
+    const cpf  = req.body.cpf;
+    const senha = md5(req.body.senha);
+
+    const sql    = `SELECT * FROM USUARIO WHERE CPF = '${cpf}' AND senha = '${senha}'`
+    const result =  await execSQL(sql);
+    console.log('SQL: '+sql);
+    console.log('result: '+result);
+    if (result == undefined || result.length == 0){
+      res.status(500).json({message: 'login inválido!'});
+      return;
+    }
+  
+    const id = result[0].idUsuario;
+    const token = jwt.sign({ id }, '1234', {
+        expiresIn: 300 // expires in 5min
+    });
+    return res.json({ auth: true, token: token });
+});
+
+    app.post('/logout', function(req, res) {
+        res.json({ auth: false, token: null });
+});
+
+
+//-------------------------contatos--------------------------- 
+
+
+/*app.get('/users', (req,res)=>{
+    res.sendFile(path.join(__dirname + '/Login.html'));
+});
+
+app.get('/', (req,res)=>{
+    res.sendFile(path.join(__dirname + '/Cadastro.html'));
+    
+});*/
+
+app.get('/contatos', (req,res)=>{//select contatos
+    const con = require('./conection').con();
+
+    con.connect((error) => {
+        if (error){
+            res.json({error : true}); 
+            console.error(error);
+            return;
+        }
+    })
+    con.query ('select * from contatos', function(err,result){
         res.send(result);
         if(err){
             throw err;
@@ -165,9 +160,69 @@ app.put('/users',(req,res)=>{//update
     });
 });
 
-app.patch('/users',(req,res)=>{
-    //patch
-})
+
+
+app.post('/contatos', (req,res)=>{//insert contato
+    const con = require('./conection').con();
+
+    con.connect((error) => {
+        if (error){
+            res.json({error : true}); 
+            console.error(error);
+            return;
+        }
+    })
+    let nome = req.body.nome;
+    let tel = req.body.telefone;
+
+con.query (`insert into contatos (nome, telefone) values ('${nome}','${tel}')`, function(err,result){
+        res.send(result);
+        console.log("FOI!");
+
+        if(err){
+            throw err;
+        }
+    });
+    console.log(req.body);
+    
+});
+
+app.post('/delete',(req,res)=>{//delete
+    const con = require('./conection').con();
+
+    con.connect((error) => {
+        if (error){
+            res.json({error : true}); 
+            console.error(error);
+            return;
+        }
+    })
+    con.query("delete from contatos where idcontatos = "+req.body.idcontatos,function(err,result){
+        res.send(result);
+        if(err){
+            throw err;
+        }
+    });
+});
+
+app.put('/contatos',(req,res)=>{//update
+    const con = require('./conection').con();
+
+    con.connect((error) => {
+        if (error){
+            res.json({error : true}); 
+            console.error(error);
+            return;
+        }
+    })
+
+    con.query('update contatos set tel = '+req.body.tel+' where idContatos = '+req.body.idContatos,function(err,result){
+        res.send(result);
+        if(err){
+            throw err;
+        }
+    });
+});
 
 app.listen(port, () =>{
 
