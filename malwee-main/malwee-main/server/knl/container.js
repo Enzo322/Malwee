@@ -133,3 +133,12 @@ exports.delete = (path, fn, userTypes) => {
         container(req, resp, fn, userTypes);
     })
 }
+
+exports.patch = (path, fn, userTypes) => {
+    path = route(path);
+    console.log('Register route: PATCH:' + path);
+
+    knl.express.patch(path, (req, resp) => {
+        container(req, resp, fn, userTypes);
+    })
+}

@@ -1,10 +1,8 @@
 const Joi = require('joi');
-const md5 = require('../utils/md5-pass');
 const knl = require('../knl');
 
 knl.post('group', async(req, resp) => {
     const schema = Joi.object({
-        produto : Joi.string().min(1).max(50).required(),
         descricao : Joi.string().min(1).max(200).required()
     })
 
@@ -12,14 +10,14 @@ knl.post('group', async(req, resp) => {
 
     const result = await knl.sequelize().models.Grupo.findAll({
         where : {
-            produto : req.body.produto
+            descricao : req.body.descricao
         }
     });
 
     knl.createException('0006', '', !knl.objects.isEmptyArray(result));
 
     const user = knl.sequelize().models.Grupo.build({
-        produto : req.body.produto,
+        status : 1,
         descricao : req.body.descricao
     });
 
@@ -43,3 +41,19 @@ knl.delete('group', async(req, resp) => {
     });
     resp.end();
 });
+
+
+knl.put('group', async(req,resp)=>{
+    const result = await knl.sequelize().models.Grupo.update({
+        descricao  : req.body.descricao
+    },{
+        where : {
+            idGrupo : req.body.idGrupo
+        }
+    })
+    resp.send(result);
+    resp.end();
+});
+        
+   
+    

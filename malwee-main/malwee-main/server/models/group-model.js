@@ -8,12 +8,12 @@ module.exports = (sequelize) => {
             autoIncrement : true,
             allowNull : false
         },
-        produto : {
-            type : Sequelize.STRING(50),
-            allowNull : false,
-        },
         descricao : {
             type : Sequelize.STRING(200),
+            allowNull : false
+        },
+        status : {
+            type : Sequelize.INTEGER,
             allowNull : false
         }
     })
