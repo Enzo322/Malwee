@@ -1,0 +1,22 @@
+<mat-form-field class="example-form-field" appearance="fill">
+    <mat-label>Pesquisa</mat-label>
+    <input matInput type="text" [(ngModel)]="value" placeholder="Digite um grupo">
+    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <button>
+  <mat-icon>add_circle</mat-icon>
+</button>
+
+<mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile>
+        <div class="groups">
+                <h1>aqui vai um grupo</h1>
+                <h1>aqui vai um grupo</h1>
+                <h1>aqui vai um grupo</h1>
+                <h1>aqui vai um grupo</h1>
+                <h1>aqui vai um grupo</h1>    
+    </div>
+    </mat-grid-tile>
+</mat-grid-list>
