@@ -1,46 +1,75 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
+import { HttpClient} from '@angular/common/http';
+import { HttpService } from 'src/services/http.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+export interface DialogData {
+  grupo: string;
+  subGrupo: string;
+}
+
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.scss']
 })
-
 export class GroupComponent implements OnInit {
-  private readonly baseUrl = 'http://localhost:3005/group';
   value = '';
-  grupo : string = "";
-  grupos=[{descricao: ""}];
+  descricao : string = "";
+  grupos : Array<any> = [];
 
-  constructor(private router : Router, private HttpClient : HttpClient) { }
+  grupo : string = "";
+  subGrupo : string = "";
+  id : number = 1;
+
+
+  constructor(private http : HttpClient, private httpService : HttpService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-  }
-  private makeHttpOptions(){
-    const token = window.localStorage.getItem('token');
-
-    return {
-      headers : {
-        'Authorization': 'bearer ' + token
-      }
-    }
-  }
-  public get(router : string) : Promise<any>{
-    return this.HttpClient.get(this.baseUrl + this.router , this.makeHttpOptions()).toPromise();
+    this.get();
   }
 
-  public post(router : string, obj : any) : Promise<any>{
-    return this.HttpClient.post(this.baseUrl + this.router, obj, this.makeHttpOptions()).toPromise();
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '550px',
+      data: {grupo: this.grupo, subGrupo: this.subGrupo},
+    });
   }
 
+  public putItens(){
+    this.putGrupo();
+    this.putSubGrupo();
+  }
 
-  public patch(router : string, obj : any) : Promise<any>{
-    return this.HttpClient.patch(this.baseUrl + this.router, obj, this.makeHttpOptions()).toPromise();
+  async get(){
+    this.grupos = await this.httpService.get('group');
+  }
+
+  // async post(){
+  //   this.grupos = await this.httpService.post('grupo');
+  // }
+
+  // async patch(){
+  //   this.grupos = await this.httpService.patch('grupo');
+  // }  
+
+  async putGrupo(){
+    this.grupos = await this.httpService.put('grupo', {descricao : this.grupo, idGrupo : this.id});
   }  
+  
+  async putSubGrupo(){
+    this.grupos = await this.httpService.put('grupo', {tipoProduto : this.subGrupo, fkGroup : this.id});
+  }
 
-  public put(router : string, obj : any) : Promise<any>{
-    return this.HttpClient.put(this.baseUrl + this.router, obj, this.makeHttpOptions()).toPromise();
-  }  
+}
 
+export class ModalComponent {
+  constructor(
+    public dialogRef: MatDialogRef<ModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

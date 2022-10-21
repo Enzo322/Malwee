@@ -9,14 +9,20 @@
   <mat-icon>add_circle</mat-icon>
 </button>
 
-<mat-grid-list cols="2" rowHeight="2:1">
-  <mat-grid-tile>
-      <div class="groups">
-          <h1 *ngFor="let grupo of grupos">{{grupo.descricao}}</h1>
-          <h1 *ngFor="let grupo of grupos">{{grupo.descricao}}</h1>
-          <h1 *ngFor="let grupo of grupos">{{grupo.descricao}}</h1>
-          <h1 *ngFor="let grupo of grupos">{{grupo.descricao}}</h1>
-          <h1 *ngFor="let grupo of grupos">{{grupo.descricao}}</h1>    
-      </div>  
-  </mat-grid-tile>
-</mat-grid-list>
+  <div class="groups" *ngFor="let grupo of grupos">
+      <button (click)="openDialog()"><h1>{{grupo.descricao}}</h1></button>
+  </div>  
+<div class="edit">
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>grupo</mat-label>
+      <input matInput placeholder="Ex. Short" [(ngModel)]="grupo">
+    </mat-form-field>
+    <br>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Descrição</mat-label>
+      <textarea matInput placeholder="Ex. Short tactel verde" [(ngModel)]="subGrupo"></textarea>
+    </mat-form-field>
+    <button mat-raised-button (click) = putItens()>Editar</button>
+  </form>
+</div>
