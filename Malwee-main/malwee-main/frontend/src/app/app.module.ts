@@ -20,7 +20,7 @@ import { ModalComponent } from './modal/modal.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { NewGroupComponent } from './new-group/new-group.component';
+import { SubGrupoComponent } from './sub-grupo/sub-grupo.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +32,7 @@ import { NewGroupComponent } from './new-group/new-group.component';
     GroupComponent,
     UserComponent,
     ModalComponent,
-    NewGroupComponent
+    SubGrupoComponent,
   ],
   imports: [
     RoutesModule,

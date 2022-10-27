@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { HttpService } from 'src/services/http.service';
 
@@ -18,34 +18,41 @@ export class ModalComponent implements OnInit {
 
   grupo : string = "";
   subGrupo : string = "";
-  id : number = 1;
-  constructor(public dialogRef: MatDialogRef<ModalComponent>, private httpService : HttpService) { }
+  id : number = 0;
+  divs : number = 0
+  constructor(public dialogRef: MatDialogRef<ModalComponent>, private httpService : HttpService,
+    @Inject(MAT_DIALOG_DATA) private data : {idGrupo: number, descricao : string, status : number}) { }
 
   ngOnInit(): void {
-    const data : any = this.dialogRef.getState();
-
-    if (!data){
+    console.log(this.data);
+    if(this.data.idGrupo == null){
+      this.divs = 2
+    }else{
+      this.divs = 1
+    }
+    if (!this.data){
       return;
     }
-    //pesquisar como pegar os parametros do data
-    //tirar o new group e colocar no modal
-    //pegar o delete do daniel
-    this.id = data.id,
-    this.grupo = data.grupo;
+    this.id = this.data.idGrupo,
+    this.grupo = this.data.descricao;
   }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
-  public putItens(){
-    this.putGrupo();
-    this.putSubGrupo();
+
+  async putItens(){
+    this.grupos = await this.httpService.put('group', {descricao : this.grupo, idGrupo : this.id});
+    this.dialogRef.close();
   }
 
-  async putGrupo(){
-    this.grupos = await this.httpService.put('grupo', {descricao : this.grupo, idGrupo : this.id});
-  }  
-  
-  async putSubGrupo(){
-    this.grupos = await this.httpService.put('grupo', {tipoProduto : this.subGrupo, fkGroup : this.id});
+  async postGroup(){
+    this.grupos = await this.httpService.post('group',{descricao : this.grupo})
+    this.dialogRef.close();
+  }
+
+  async deleteItens(){
+    this.grupos = await this.httpService.patch('group', {idGrupo: this.id})
+    this.dialogRef.close();
   }
 }

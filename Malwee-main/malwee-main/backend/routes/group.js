@@ -8,14 +8,6 @@ knl.post('group', async(req, resp) => {
 
     knl.validate(req.body, schema);
 
-    const result = await knl.sequelize().models.Grupo.findAll({
-        where : {
-            descricao : req.body.descricao
-        }
-    });
-
-    knl.createException('0006', '', !knl.objects.isEmptyArray(result));
-
     const user = knl.sequelize().models.Grupo.build({
         status : 1,
         descricao : req.body.descricao
@@ -56,7 +48,7 @@ knl.put('group', async(req,resp)=>{
 });
         
 knl.patch('group', async(req, resp) => {
-    const result = await knl.sequelize().models.grupo.update({
+    const result = await knl.sequelize().models.Grupo.update({
     status : 0
     },{
          where : {

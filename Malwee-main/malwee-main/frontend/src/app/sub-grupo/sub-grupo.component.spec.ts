@@ -1,18 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
+import { SubGrupoComponent } from './sub-grupo.component';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('SubGrupoComponent', () => {
+  let component: SubGrupoComponent;
+  let fixture: ComponentFixture<SubGrupoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginComponent ]
+      declarations: [ SubGrupoComponent ]
     })
     .compileComponents();
+  });
 
-    fixture = TestBed.createComponent(LoginComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(SubGrupoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

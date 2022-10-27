@@ -3,7 +3,7 @@ import { HttpClient} from '@angular/common/http';
 import { HttpService } from 'src/services/http.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ModalComponent } from '../modal/modal.component';
-import { NewGroupComponent } from '../new-group/new-group.component';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 export interface DialogData {
   grupo: string;
   id: number;
@@ -29,17 +29,23 @@ export class GroupComponent implements OnInit {
   }
 
   openPutModal(grupo : any): void {
-    this.dialog.open(ModalComponent, {
+    const ref = this.dialog.open(ModalComponent, {
       width: '550px',
       data: grupo
     });
+
+    ref.afterClosed().subscribe(result => {
+      this.get();
+    })
   }
 
   openPostModal(): void {
-    this.dialog.open(NewGroupComponent, {
+    const ref = this.dialog.open(ModalComponent, {
       width: '550px',
-      data: null
     });
+    ref.afterClosed().subscribe(result => {
+      this.get();
+    })
   }
 
   async get(){

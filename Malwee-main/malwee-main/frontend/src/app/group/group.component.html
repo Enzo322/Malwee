@@ -6,9 +6,11 @@
     </button>
   </mat-form-field>
   <button>
-  <button (click)="openPostModal()"><mat-icon>add_circle</mat-icon></button>
+  <button (click)="openPutModal(grupo)"><mat-icon>add_circle</mat-icon></button>
 </button>
 
-  <div class="groups" *ngFor=" let i = index let grupo of grupos | filter : search ">
-      <button (click)="openPutModal(grupo)"><h1>{{grupo.idGrupo}} - {{grupo.descricao}}</h1></button>
+  <div class="groups" *ngFor="let grupo of grupos | filter : search ">
+    <ng-template [ngIf] = "grupo.status == 1">
+      <button (click)="openPutModal(grupo)"><h1>{{grupo.descricao}}</h1></button>
+    </ng-template>
   </div>  
