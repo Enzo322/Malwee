@@ -1,4 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { HttpClient} from '@angular/common/http';
+import { HttpService } from 'src/services/http.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ModalComponent } from '../modal/modal.component';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
+
+export interface DialogData {
+  tipoProduto: string;
+  fk : number;
+}
 
 @Component({
   selector: 'app-sub-grupo',
@@ -7,9 +17,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SubGrupoComponent implements OnInit {
 
-  constructor() { }
+  tipoProduto : string = "";
+  subGrupos : Array<any> = [];
+
+  subGrupo : string = "";
+  search : string = '';
+  fk: number = 0;
+  constructor(private http : HttpClient, private httpService : HttpService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.get()
+  }
+  openModal(sub : any): void {
+    const ref = this.dialog.open(ModalComponent, {
+      width: '550px',
+      data: sub
+    });
+
+    ref.afterClosed().subscribe(result => {
+      this.get();
+    })
   }
 
+  async get(){
+    this.subGrupos = await this.httpService.get('subGroup');
+  }
 }

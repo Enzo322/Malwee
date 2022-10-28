@@ -1,3 +1,5 @@
+import { ClientComponent } from "./client/client.component";
+import { ColectionComponent } from "./colection/colection.component";
 import { GroupComponent } from "./group/group.component";
 import { SubGrupoComponent } from "./sub-grupo/sub-grupo.component";
 import { UserComponent } from "./user/user.component";
@@ -25,14 +27,14 @@ export const MenuItens = [
     {
         path: 'colection',
         caption : 'Coleção',
-        icon : 'equalizer',
-        component: SubGrupoComponent,
+        icon : 'card_giftcard',
+        component: ColectionComponent,
     }
     ,
     {
         path: 'client',
         caption : 'Cliente',
-        icon : 'equalizer',
-        component: SubGrupoComponent,
+        icon : 'accessibility_new',
+        component: ClientComponent,
     }
 ]

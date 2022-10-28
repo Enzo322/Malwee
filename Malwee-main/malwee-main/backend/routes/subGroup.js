@@ -4,7 +4,7 @@ const knl = require('../knl');
 knl.post('subGroup', async(req, resp) => {
     const schema = Joi.object({
         tipoProduto : Joi.string().min(1).max(50).required(),
-        fkGroup : Joi.INTEGER().required()
+        fkGroup : Joi.number().required()
     })
 
     knl.validate(req.body, schema);

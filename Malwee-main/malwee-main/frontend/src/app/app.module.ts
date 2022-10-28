@@ -21,6 +21,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SubGrupoComponent } from './sub-grupo/sub-grupo.component';
+import { ColectionComponent } from './colection/colection.component';
+import { ClientComponent } from './client/client.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +35,8 @@ import { SubGrupoComponent } from './sub-grupo/sub-grupo.component';
     UserComponent,
     ModalComponent,
     SubGrupoComponent,
+    ColectionComponent,
+    ClientComponent,
   ],
   imports: [
     RoutesModule,
