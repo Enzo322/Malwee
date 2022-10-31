@@ -30,4 +30,31 @@ knl.post('user', async(req, resp) => {
 
     await user.save();
     resp.end();
-}, securityConsts.USER_TYPE_PUBLIC);
+}/*, securityConsts.USER_TYPE_PUBLIC*/);
+knl.get('user',async(req,resp)=>{
+    const result = await knl.sequelize().models.Usuario.findAll()
+    resp.send(result);
+    resp.end();
+})
+knl.patch('user', async(req, resp) => {
+    const result = await knl.sequelize().models.Usuario.destroy({
+        status : 0,
+        where : {
+            id : req.body.id
+        }
+    });
+
+    resp.send(result);
+    resp.end();
+});
+knl.put('user', async(req,resp)=>{
+    const result = await knl.sequelize().models.Usuario.update({
+        password  : md5(req.body.password)
+    },{
+        where : {
+            id : req.body.id,
+        }
+    })
+    resp.send(result);
+    resp.end();
+});

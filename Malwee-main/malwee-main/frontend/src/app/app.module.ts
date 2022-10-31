@@ -16,13 +16,21 @@ import { RoutesModule } from './routes.module';
 import { GroupComponent } from './group/group.component';
 import { UserComponent } from './user/user.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ModalComponent } from './modal/modal.component';
+import { ModalGroupComponent } from './modal-group/modal-group.component'; 
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { SubGrupoComponent } from './sub-grupo/sub-grupo.component';
 import { ColectionComponent } from './colection/colection.component';
 import { ClientComponent } from './client/client.component';
+import { ModelSubComponent } from './model-sub/model-sub.component';
+import { ModelClientComponent } from './model-client/model-client.component';
+import { ModelColectionComponent } from './model-colection/model-colection.component';
+import { ProdutoComponent } from './produto/produto.component';
+import { ModelProdutoComponent } from './model-produto/model-produto.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
+import { ModalUserComponent } from './modal-user/modal-user.component';
+import { ModalUserPassComponent } from './modal-user-pass/modal-user-pass.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,10 +41,18 @@ import { ClientComponent } from './client/client.component';
     DashComponent,
     GroupComponent,
     UserComponent,
-    ModalComponent,
+    ModalGroupComponent,
     SubGrupoComponent,
     ColectionComponent,
     ClientComponent,
+    ModelSubComponent,
+    ModelClientComponent,
+    ModelColectionComponent,
+    ProdutoComponent,
+    ModelProdutoComponent,
+    DropdownComponent,
+    ModalUserComponent,
+    ModalUserPassComponent,
   ],
   imports: [
     RoutesModule,

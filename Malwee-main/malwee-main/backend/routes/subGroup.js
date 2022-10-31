@@ -9,14 +9,6 @@ knl.post('subGroup', async(req, resp) => {
 
     knl.validate(req.body, schema);
 
-    const result = await knl.sequelize().models.SubGrupo.findAll({
-        where : {
-            tipoProduto : req.body.tipoProduto
-        }
-    });
-
-    knl.createException('0006', '', !knl.objects.isEmptyArray(result));
-
     const user = knl.sequelize().models.SubGrupo.build({
         tipoProduto : req.body.tipoProduto,
         fkGroup : req.body.fkGroup
@@ -43,12 +35,12 @@ knl.delete('subGroup', async(req, resp) => {
     resp.end();
 });
 knl.put('subGroup', async(req,resp)=>{
-    const result = await knl.sequelize().models.subGrupo.update({
+    const result = await knl.sequelize().models.SubGrupo.update({
         tipoProduto  : req.body.tipoProduto,
-        fkGroup : req.body.fkGroup
+        fkGroup      : req.body.fkGroup
     },{
         where : {
-            idSub : req.body.idSub
+            idSub : req.body.idSub,
         }
     })
     resp.send(result);
@@ -56,8 +48,8 @@ knl.put('subGroup', async(req,resp)=>{
 });
 
 knl.patch('subGroup', async(req, resp) => {
-    const result = await knl.sequelize().models.grupo.update({
-    tipoProduto  : req.body.tipoProduto
+    const result = await knl.sequelize().models.SubGrupo.update({
+    fkGroup : 0
     },{
          where : {
             idSub : req.body.idSub,

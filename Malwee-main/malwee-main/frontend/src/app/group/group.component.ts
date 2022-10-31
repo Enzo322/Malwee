@@ -2,8 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { HttpService } from 'src/services/http.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { ModalComponent } from '../modal/modal.component';
-import { Content } from '@angular/compiler/src/render3/r3_ast';
+import { ModalGroupComponent } from '../modal-group/modal-group.component'; 
 export interface DialogData {
   grupo: string;
   id: number;
@@ -29,7 +28,7 @@ export class GroupComponent implements OnInit {
   }
 
   openPutModal(grupo : any): void {
-    const ref = this.dialog.open(ModalComponent, {
+    const ref = this.dialog.open(ModalGroupComponent, {
       width: '550px',
       data: grupo
     });
@@ -39,14 +38,7 @@ export class GroupComponent implements OnInit {
     })
   }
 
-  openPostModal(): void {
-    const ref = this.dialog.open(ModalComponent, {
-      width: '550px',
-    });
-    ref.afterClosed().subscribe(result => {
-      this.get();
-    })
-  }
+
 
   async get(){
     this.grupos = await this.httpService.get('group');

@@ -9,10 +9,10 @@ export interface DialogData {
 
 @Component({
   selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  templateUrl: './modal-group.component.html',
+  styleUrls: ['./modal-group.component.scss']
 })
-export class ModalComponent implements OnInit {
+export class ModalGroupComponent implements OnInit {
   descricao : string = "";
   grupos : Array<any> = [];
 
@@ -20,7 +20,7 @@ export class ModalComponent implements OnInit {
   subGrupo : string = "";
   id : number = 0;
   divs : number = 0
-  constructor(public dialogRef: MatDialogRef<ModalComponent>, private httpService : HttpService,
+  constructor(public dialogRef: MatDialogRef<ModalGroupComponent>, private httpService : HttpService,
     @Inject(MAT_DIALOG_DATA) private data : {idGrupo: number, descricao : string, status : number}) { }
 
   ngOnInit(): void {
