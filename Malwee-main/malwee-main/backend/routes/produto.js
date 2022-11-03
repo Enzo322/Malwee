@@ -53,10 +53,7 @@ knl.delete('product', async(req, resp) => {
 knl.put('product', async(req,resp)=>{
     const result = await knl.sequelize().models.Produto.update({
         descricao  : req.body.descricao,
-        preco : req.body.preco,
-        fkSubGrupo : req.body.fkSubGrupo,
-        fkGrupo : req.body.fkGrupo,
-        fkColecao : req.body.fkColecao
+        preco : req.body.preco
     },{
         where : {
             idProduto : req.body.idProduto
@@ -68,10 +65,12 @@ knl.put('product', async(req,resp)=>{
         
 knl.patch('product', async(req, resp) => {
     const result = await knl.sequelize().models.Produto.update({
-    descricao  : req.body.descricao
+        fkSubGrupo  : 0,
+        fkGrupo : 0,
+        fkColecao : 0
     },{
          where : {
-            idProduto : req.body.idProduto,
+            idProduto : req.body.idProduto
             
         }
     });

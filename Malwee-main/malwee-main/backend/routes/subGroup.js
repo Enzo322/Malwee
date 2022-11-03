@@ -36,8 +36,7 @@ knl.delete('subGroup', async(req, resp) => {
 });
 knl.put('subGroup', async(req,resp)=>{
     const result = await knl.sequelize().models.SubGrupo.update({
-        tipoProduto  : req.body.tipoProduto,
-        fkGroup      : req.body.fkGroup
+        tipoProduto  : req.body.tipoProduto
     },{
         where : {
             idSub : req.body.idSub,

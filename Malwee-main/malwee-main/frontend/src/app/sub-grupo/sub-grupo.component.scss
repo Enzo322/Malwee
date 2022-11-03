@@ -25,3 +25,11 @@ mat-grid-tile {
 h1{
   font-family: "Neo Sans", sans-serif;
 }
+mat-card{
+  width: 1000px;
+  text-align: left;
+  margin-left: 0.5%;
+}
+.card-hover :hover{
+  background-color: #eee;
+}

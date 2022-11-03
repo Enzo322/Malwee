@@ -53,9 +53,7 @@ knl.put('colection', async(req,resp)=>{
 });
 
 knl.patch('colection', async(req, resp) => {
-    const result = await knl.sequelize().models.grupo.update({
-    descricao : req.body.descricao
-    },{
+    const result = await knl.sequelize().models.colecao.destroy({
          where : {
             idColecao : req.body.idColecao,
             

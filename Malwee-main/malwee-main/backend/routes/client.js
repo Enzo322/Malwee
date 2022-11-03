@@ -65,7 +65,7 @@ knl.put('client', async(req,resp)=>{
         
 knl.patch('client', async(req, resp) => {
     const result = await knl.sequelize().models.Cliente.update({
-        cnpj : req.body.cnpj
+        cnpj : 0
     },{
          where : {
             idCliente : req.body.idCliente,

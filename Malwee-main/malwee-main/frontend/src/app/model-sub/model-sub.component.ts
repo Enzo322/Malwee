@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { HttpService } from 'src/services/http.service';
 import { DropdownComponent } from '../dropdown/dropdown.component'; 
+import { GroupComponent } from '../group/group.component';
+import { ModalGroupComponent } from '../modal-group/modal-group.component';
 export interface DialogData {
   subGrupo: string;
   fk: number;
@@ -41,7 +43,7 @@ export class ModelSubComponent implements OnInit {
   }
   async putItens(){
     this.subGrupos = await this.httpService.put('subGroup',
-     {tipoProduto : this.sub, fkGroup : this.selectedGroup, idSub : this.data.idSub});
+     {tipoProduto : this.sub, idSub : this.data.idSub});
     this.dialogRef.close();
   }
 

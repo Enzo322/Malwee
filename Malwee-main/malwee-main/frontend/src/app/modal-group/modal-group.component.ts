@@ -43,16 +43,16 @@ export class ModalGroupComponent implements OnInit {
 
   async putItens(){
     this.grupos = await this.httpService.put('group', {descricao : this.grupo, idGrupo : this.id});
-    this.dialogRef.close();
+    this.onNoClick();
   }
 
   async postGroup(){
     this.grupos = await this.httpService.post('group',{descricao : this.grupo})
-    this.dialogRef.close();
+    this.onNoClick();
   }
 
   async deleteItens(){
     this.grupos = await this.httpService.patch('group', {idGrupo: this.id})
-    this.dialogRef.close();
+    this.onNoClick();
   }
 }

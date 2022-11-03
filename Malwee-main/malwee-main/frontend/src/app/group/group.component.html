@@ -9,8 +9,8 @@
   <button (click)="openPutModal(grupo)"><mat-icon>add_circle</mat-icon></button>
 </button>
 
-  <div class="groups" *ngFor="let grupo of grupos | filter : search ">
-    <ng-template [ngIf] = "grupo.status == 1">
-      <button (click)="openPutModal(grupo)"><h1>{{grupo.idGrupo}} - {{grupo.descricao}}</h1></button>
-    </ng-template>
-  </div>  
+<div class="groups" *ngFor="let grupo of grupos | filter : search ">
+  <ng-template [ngIf] = "grupo.status == 1">
+    <button (click)="openPutModal(grupo)" class="card-hover"><mat-card><h1> {{grupo.descricao}}</h1></mat-card></button>
+  </ng-template>
+</div>  

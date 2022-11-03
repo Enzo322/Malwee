@@ -7,25 +7,27 @@ import { HttpService } from 'src/services/http.service';
   styleUrls: ['./modal-user.component.scss']
 })
 export class ModalUserComponent implements OnInit {
-  selectedGroup : number = 0;
+  idUser : number = 1;
   public users : Array<any> = [];
 
   constructor(public dialogRef: MatDialogRef<ModalUserComponent>,private HttpService : HttpService, @Inject(MAT_DIALOG_DATA) private data : {id: number, username : string, password : string}) { }
 
   ngOnInit(): void {
     this.loadUsers();
-    this.selectedGroup = this.data.id;
-    console.log(this.data);
   }
 
   async loadUsers(){
     this.users = await this.HttpService.get('user')
   }
   async deleteUser(){
-    this.users = await this.HttpService.patch('user',{id : this.data.id})
+    this.users = await this.HttpService.patch('user',{id : this.idUser})
     this.dialogRef.close();
   }
   async putUser(){
     this.users = await this.HttpService.put('user',{id : this.data.id, password : this.data.password})
+  }
+
+  idUsers(){
+    console.log(this.idUser)
   }
 }
