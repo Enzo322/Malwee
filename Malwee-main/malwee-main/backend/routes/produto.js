@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const { where } = require('sequelize');
 const knl = require('../knl');
 
 knl.post('product', async(req, resp) => {
@@ -33,6 +34,10 @@ knl.post('product', async(req, resp) => {
 });
 
 knl.get('product', async(req, resp) => {
+    // const result = await knl.sequelize().query('select grupos.descricao as grupos, subgrupos.tipoProduto as subgrupos,  produtos.descricao, colecaos.descricao as colecaos, produtos.preco from produtos INNER JOIN colecaos on produtos.fkColecao = colecaos.idColecao INNER JOIN grupos on produtos.fkGrupo = grupos.idGrupo INNER JOIN subgrupos on produtos.fkSubGrupo = subgrupos.idSub'
+    // , {raw : true})
+    
+    // console.log(result)
     const user = await knl.sequelize().models.Produto.findAll();
     resp.send(user);
     resp.end();

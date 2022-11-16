@@ -24,6 +24,6 @@ id : number = 1;
   async clear(){
     this.password = "";
     this.cpassword = "";
-
+    this.dialogRef.close();
   }
 }

@@ -24,7 +24,7 @@ export class ModalGroupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data : {idGrupo: number, descricao : string, status : number}) { }
 
   ngOnInit(): void {
-    console.log(this.data);
+    console.log(this.data.idGrupo);
     if(this.data.idGrupo == null){
       this.divs = 2
     }else{
